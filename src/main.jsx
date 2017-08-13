@@ -3,13 +3,15 @@ import reactDOM from 'react-dom'
 import { App } from './App';
 import {getStore} from '../src/getStore';
 import { OFFLINE, updateStatus } from './actions';
+import {Provider} from 'react-redux';
 
 const store = getStore();
 
-const Main = ({state}) => { 
+const Main = ({state}) => {
     return <div>
-        <h1>Welcome {state.get(`currentUser`).get(`name`)}</h1>
+      <Provider store={store}>
         <App />
+      </Provider>
     </div>;
 };
 
