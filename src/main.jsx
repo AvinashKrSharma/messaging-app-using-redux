@@ -1,10 +1,8 @@
 import React from 'react';
 import reactDOM from 'react-dom'
-import { createStore } from 'redux';
 import { App } from './App';
+import {store} from '../src/getStore';
 
-const reducer = (state) => { return state };
-export const store = createStore(reducer);
 
 const Main = () => { return <App/> };
 
