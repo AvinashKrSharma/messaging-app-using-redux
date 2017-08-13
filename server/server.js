@@ -10,17 +10,20 @@ import { channels, } from './db/Channel';
 import { users } from './db/User';
 import { getDefaultState } from './getDefaultState'
 import { initializeDB } from './db/initializeDB';
+import socketIO from 'socket.io';
+import {simulateActivity} from './simulateActivity';
 
 let app = express();
 const server = http.createServer(app);
 
+const io = socketIO(server);
 // do away with cors issue
 app.use(cors());
 
 // serves the files emitted from webpack over a connect server
 // No files are written to disk, it handle the files in memory
 // If files changed in watch mode, the middleware no longer serves the old bundle,
-// but delays requests until the compiling has finished. 
+// but delays requests until the compiling has finished.
 // You don't have to wait before refreshing the page after a file modification.
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
@@ -100,7 +103,7 @@ export const createMessage = ({userID,channelID,messageID,input}) =>{
         owner:userID
     };
     channel.messages.push(message);
-    io.emit("NEW_MESSAGE",{channelID:channel.id, ...message});
+    io.emit("NEW_MESSAGE", {channelID:channel.id, ...message});
 };
 
 app.use('/input/submit/:userID/:channelID/:messageID/:input',({params:{userID,channelID,messageID,input}},res)=>{
@@ -121,3 +124,5 @@ const port = 9000;
 server.listen(port,()=>{
     console.info(`Lite Web Messenger is listening on port ${port}.`);
 });
+
+simulateActivity(currentUser.id);
