@@ -7,6 +7,7 @@ import {getDefaultState} from '../server/getDefaultState';
 import {initializeDB} from '../server/db/initializeDB';
 import {createLogger} from 'redux-logger';
 import {reducer} from './reducers';
+import {getPreloadedState} from './getPreloadedState';
 
 const io = window.io;
 const socketConfigOut = {
@@ -17,8 +18,8 @@ const socketConfigOut = {
 }
 const socketMiddleware = createSocketMiddleware(io)(socketConfigOut);
 initializeDB();
-const currentUser = users[0];
-const defaultState = fromJS(getDefaultState(currentUser));
+// const currentUser = users[0];
+// const defaultState = fromJS(getDefaultState(currentUser));
 const logger = createLogger({
     stateTransformer: state => state.toJS()
 });
@@ -28,7 +29,7 @@ const enhancer = compose(
     logger
   )
 )
-const store = createStore(reducer, defaultState, enhancer);
+const store = createStore(reducer, getPreloadedState(), enhancer);
 
 const socketConfigIn = {
   NEW_MESSAGE: (data) => {

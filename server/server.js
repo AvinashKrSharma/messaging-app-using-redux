@@ -12,6 +12,7 @@ import { getDefaultState } from './getDefaultState'
 import { initializeDB } from './db/initializeDB';
 import socketIO from 'socket.io';
 import {simulateActivity} from './simulateActivity';
+import {handleRender} from './serverRenderMiddleware';
 
 let app = express();
 const server = http.createServer(app);
@@ -117,8 +118,8 @@ app.use('/input/submit/:userID/:channelID/:messageID/:input',({params:{userID,ch
 // --------------------- ends -----------------------//
 
 // serving public and css directory as static files
-app.use(express.static('public'));
 app.use(express.static('public/css'));
+app.use('/', handleRender(() => getDefaultState(currentUser)))
 
 const port = 9000;
 server.listen(port,()=>{
