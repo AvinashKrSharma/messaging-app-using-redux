@@ -1,3 +1,4 @@
+// used to change current users status when a new status is selected from dropdown
 import { makeActionCreator } from './';
 
 export const UPDATE_STATUS = `UPDATE_STATUS`;
