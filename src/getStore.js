@@ -3,10 +3,14 @@ import {createSocketMiddleware} from './middlewares/socket';
 import {RECEIVE_MESSAGE} from './actions';
 import {getDefaultState} from '../server/getDefaultState';
 import thunk from 'redux-thunk';
+import { currentUserStatusSaga } from './sagas/currentUserStatusSaga';
+import createSagaMiddleware from 'redux-saga';
 import {initializeDB} from '../server/db/initializeDB';
 import {createLogger} from 'redux-logger';
 import {reducer} from './reducers';
 import {getPreloadedState} from './getPreloadedState';
+
+const sagaMiddleware = createSagaMiddleware();
 
 const io = window.io;
 const socketConfigOut = {
@@ -24,6 +28,7 @@ const logger = createLogger({
 });
 const enhancer = compose(
   applyMiddleware(
+    sagaMiddleware,
     thunk,
     socketMiddleware,
     logger
@@ -50,3 +55,5 @@ for (const key in socketConfigIn){
 export const getStore = () => {
     return store;
 };
+
+sagaMiddleware.run(currentUserStatusSaga);
