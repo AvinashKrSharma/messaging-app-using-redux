@@ -1,20 +1,8 @@
 import React from 'react'
-
 import { connect } from 'react-redux'
-
-import {
-    CurrentChannelTextInput
-} from './CurrentChannelTextInput';
-
-import {
-    updateChannelInputText,
-    submitChannelInputText,
-} from './../../actions/';
-
-import {
-    activeChannelSelector,
-    currentUserSelector
-} from './../../selectors'
+import { CurrentChannelTextInput } from './CurrentChannelTextInput';
+import { updateChannelInputText, submitChannelInputText, } from './../../actions/';
+import { activeChannelSelector, currentUserSelector } from './../../selectors'
 
 const mapStateToProps = (state) => {
     const activeChannel = activeChannelSelector(state);

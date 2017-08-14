@@ -1,11 +1,8 @@
 import React from 'react'
-import {
-    FETCHED,
-    OFFLINE
-} from './../../actions'
+import { FETCHED, OFFLINE } from './../../actions'
 import classnames from 'classnames';
 
-export const CurrentChannelTextInput = ({text = "",submitMessage,updateText,activeChannel,fetchStatus,userStatus})=>{
+export const CurrentChannelTextInput = ({text = "", submitMessage, updateText, activeChannel, fetchStatus, userStatus})=>{
     const buttonClass = classnames('btn','btn-default',{disabled:userStatus === OFFLINE});
     return (
     <div>
