@@ -1,9 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import {createSocketMiddleware} from './middlewares/socket';
 import {RECEIVE_MESSAGE} from './actions';
-import {fromJS} from 'immutable';
-import {users} from '../server/db';
 import {getDefaultState} from '../server/getDefaultState';
+import thunk from 'redux-thunk';
 import {initializeDB} from '../server/db/initializeDB';
 import {createLogger} from 'redux-logger';
 import {reducer} from './reducers';
@@ -25,6 +24,7 @@ const logger = createLogger({
 });
 const enhancer = compose(
   applyMiddleware(
+    thunk,
     socketMiddleware,
     logger
   )
